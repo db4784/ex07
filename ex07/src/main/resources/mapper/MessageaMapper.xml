@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MessageMapper">
+	<update id ="updateReadDate">
+		update tbl_message set readDate =now() 
+		where mid =#{mid}
+	</update>
+	<select id ="read" resultType="com.example.domain.MessageVO" >
+         select m.*, u.uname from tbl_message m, tbl_user u
+         where mid=#{mid} and u.uid=sender
+    </select>
+	<insert id ="insert">
+		insert into tbl_message(sender, receiver, message) 
+		values (#{sender}, #{receiver}, #{message})
+	</insert>
+	<select id ="sendList" resultType ="com.example.domain.MessageVO">
+		select m.*, u.uname from tbl_message m, tbl_user u 
+		where sender=#{sender} and uid=receiver
+	</select>
+	<delete id ="delete">
+		delete from tbl_message where mid=#{mid}
+	</delete>
+	<select id ="receiveList" resultType ="com.example.domain.MessageVO">
+		select m.*, u.uname from tbl_message m, tbl_user u 
+		where receiver =#{receiver} and uid=sender
+	</select>
+</mapper>
